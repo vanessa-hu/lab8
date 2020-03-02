@@ -117,13 +117,13 @@ module MakeInterval (Endpoint : ORDERED_TYPE) =
     (* intersect intvl1 intvl2 -- Returns the intersection of `intvl1`
        and `intvl2` *)
     let intersect (intvl1 : interval) (intvl2 : interval) : interval =
+      let ordered x y = if Endpoint.compare x y <= 0 then x, y else y, x in
       match intvl1, intvl2 with
-      | _, Empty
-      | Empty, _ -> Empty
+      | Empty, _
+      | _, Empty -> Empty
       | Interval (low1, high1), Interval (low2, high2) ->
-        let order x y = if Endpoint.compare x y <=0 then (x,y) else (y,x) in
-          let (_, low), (high, _) = order low1 low2, order high1 high2 in
-          Interval (low, high)
+         let (_, low), (high, _)  = ordered low1 low2, ordered high1 high2 in
+         create low high
     end ;;
 
 (*......................................................................
@@ -144,7 +144,7 @@ overlap, and calculate their intersection as `intvl1_intersect_intvl2`.
 ......................................................................*)
 
 let intvl1 = IntInterval.create 1 10 ;;
-let intvl2 = IntInterval.create 12 400 ;;
+let intvl2 = IntInterval.create 9 400 ;;
 let intvl1_intersect_intvl2 = IntInterval.intersect intvl1 intvl2 ;;
 
 (* There's currently a problem with the `MakeInterval` functor. It's
@@ -231,14 +231,13 @@ module MakeSafeInterval (Endpoint : ORDERED_TYPE) : INTERVAL =
     (* intersect intvl1 intvl2 -- Returns the intersection of `intvl1`
        and `intvl2` *)
     let intersect (intvl1 : interval) (intvl2 : interval) : interval =
+      let ordered x y = if Endpoint.compare x y <= 0 then x, y else y, x in
       match intvl1, intvl2 with
-      | _, Empty
-      | Empty, _ -> Empty
+      | Empty, _
+      | _, Empty -> Empty
       | Interval (low1, high1), Interval (low2, high2) ->
-        let order x y = if Endpoint.compare x y <=0 then (x,y) else (y,x) in
-          let (_, low), (high, _) = order low1 low2, order high1 high2 in
-          Interval (low, high)
-
+         let (_, low), (high, _)  = ordered low1 low2, ordered high1 high2 in
+         create low high
 
   end ;;
 
@@ -335,16 +334,14 @@ module MakeBestInterval (Endpoint : ORDERED_TYPE)
     (* intersect intvl1 intvl2 -- Returns the intersection of `intvl1`
        and `intvl2` *)
     let intersect (intvl1 : interval) (intvl2 : interval) : interval =
+      let ordered x y = if Endpoint.compare x y <= 0 then x, y else y, x in
       match intvl1, intvl2 with
-      | _, Empty
-      | Empty, _ -> Empty
+      | Empty, _
+      | _, Empty -> Empty
       | Interval (low1, high1), Interval (low2, high2) ->
-        let order x y = if Endpoint.compare x y <=0 then (x,y) else (y,x) in
-          let (_, low), (high, _) = order low1 low2, order high1 high2 in
-          create low high
-
-
-  end ;;
+         let (_, low), (high, _)  = ordered low1 low2, ordered high1 high2 in
+         create low high
+       end ;;
 
 
 
