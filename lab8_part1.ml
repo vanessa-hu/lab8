@@ -143,8 +143,8 @@ two non-empty intervals named `intvl1` and `intvl2` that have some
 overlap, and calculate their intersection as `intvl1_intersect_intvl2`.
 ......................................................................*)
 
-let intvl1 = IntInterval.create 1 10 ;;
-let intvl2 = IntInterval.create 9 400 ;;
+let intvl1 = IntInterval.create 3 8 ;;
+let intvl2 = IntInterval.create 4 10 ;;
 let intvl1_intersect_intvl2 = IntInterval.intersect intvl1 intvl2 ;;
 
 (* There's currently a problem with the `MakeInterval` functor. It's
