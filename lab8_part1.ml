@@ -341,7 +341,7 @@ module MakeBestInterval (Endpoint : ORDERED_TYPE)
       | Interval (low1, high1), Interval (low2, high2) ->
         let order x y = if Endpoint.compare x y <=0 then (x,y) else (y,x) in
           let (_, low), (high, _) = order low1 low2, order high1 high2 in
-          Interval (low, high)
+          create low high
 
 
   end ;;
