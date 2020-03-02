@@ -134,7 +134,7 @@ interval module.
 
 module IntInterval = MakeInterval (struct
                                     type t = int
-                                    let compare = compare
+                                    let compare = Stdlib.compare
                                   end) ;;
 
 (*......................................................................
